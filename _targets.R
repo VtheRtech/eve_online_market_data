@@ -1,6 +1,7 @@
 library(targets)
 library(tarchetypes)
 library(here)
+library(purrr)
 
 here::i_am("_targets.R")
 
@@ -51,7 +52,9 @@ list(
   ),
   tar_target(
     db_writes,
-    tar_map(writeto_db, target_list, db_path)
+    map(
+      target_list, ~ (writeto_db(.x, db_path))
+    )
   ),
   format = "rds"
 )
