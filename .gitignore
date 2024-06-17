@@ -1,0 +1,2 @@
+# .gtignore file add files you want git to ignore :)
+data/eve_online_market.sqlite3
