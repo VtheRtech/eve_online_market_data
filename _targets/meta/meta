@@ -1,0 +1,12 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+db_book|stem|e31ec86e04ba58c6|4821ff0d8006d0e1|3bb45763fe461cb7|-152847517||t19891.8452836447s||77|rds|local|vector|||506.568||Expected a list of target objects, but the object is not a list. Are you missing a target list at the end of your target script file The target script file e.g. _targets.R must end with a list of tar_target objects.
+download_data|function|74743f2791c5dbad|||||||||||||||
+file|object|64dc52ce17931cc6|||||||||||||||
+file2|object|31bc68fcf91e6c76|||||||||||||||
+invtypes|stem|25d2cedbb5984a27|8269deecee07c18d|37fb6d06d615b322|-837720209||t19891.8448814807s|54844829ef061a3c|2141469|rds|local|vector|||4.126||
+market_info|stem|bb95f5580e6ab15b|d0314d4b4bd0aeda|37fb6d06d615b322|312123971||t19891.8451910899s|22bd77bf306a2dc2|20655624|rds|local|vector|||21.307||
+sql_db|object|d8f9d578bfd00fa6|||||||||||||||
+target_list|stem|2c071d2935b2872f|2ec5006b31d39bb6|1d2ef270d05742d0|934376331||t19891.8452592232s|d3ae57c0cf485c2f|22797127|rds|local|vector|||0||
+the_url|object|144bda74a796705c|||||||||||||||
+the_url2|object|47098ce9d453c232|||||||||||||||
+writeto_db|function|4a1cbd65f2bbb211|||||||||||||||

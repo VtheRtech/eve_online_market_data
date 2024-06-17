@@ -2,24 +2,51 @@ library(targets)
 library(tarchetypes)
 library(here)
 
+here::i_am("_targets.R")
 
-source(here("functions", "functions.R"))
+# Run the R scripts in the functions/ folder with your custom functions:
+tar_source(here("functions", "functions.R"))
 options(clustermq.schedular = "multicore")
 tar_option_set(
-  packages = c("tibble", "here"),
-  format = "qs"
+  packages = c(
+    "tidyverse",
+    "targets",
+    "here",
+    "DBI",
+    "RSQLite"
+  ),
+  format = "rds"
 )
-# Set other options as needed.
 
-
-# Run the R scripts in the R/ folder with your custom functions:
-tar_source()
-tar_source("other_functions.R")
-
-# Replace the target list below with your own:
 list(
   tar_target(
-    model,
-    command = coefficients(lm(y ~ x, data = data))
-  )
+    market_info,
+    download_data(
+      here("data", "market-orders-latest.v3.csv.bz2"),
+      "https://data.everef.net/market-orders/market-orders-latest.v3.csv.bz2"
+    ),
+    format = "rds"
+  ),
+  tar_target(
+    invtypes,
+    download_data(
+      here("data", "invTypes.csv.bz2"),
+      "https://www.fuzzwork.co.uk/dump/latest/invTypes.csv.bz2"
+    ),
+    format = "rds"
+  ),
+  tar_target(
+    target_list,
+    {
+      list(
+        market_info = market_info,
+        invtypes = invtypes
+      )
+    }
+  ),
+  tar_target(
+    db_writes,
+    tar_map(writeto_db, target_list)
+  ),
+  format = "rds"
 )
