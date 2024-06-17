@@ -1,6 +1,7 @@
 library(targets)
 library(tarchetypes)
 library(here)
+library(purrr)
 
 here::i_am("_targets.R")
 
@@ -19,6 +20,11 @@ tar_option_set(
 )
 
 list(
+  tar_target(
+    db_path,
+    build_a_db(file_path),
+    format = "rds"
+  ),
   tar_target(
     market_info,
     download_data(
@@ -46,7 +52,9 @@ list(
   ),
   tar_target(
     db_writes,
-    tar_map(writeto_db, target_list)
+    map(
+      target_list, ~ (writeto_db(.x, db_path))
+    )
   ),
   format = "rds"
 )
