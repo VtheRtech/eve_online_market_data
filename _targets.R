@@ -20,6 +20,11 @@ tar_option_set(
 
 list(
   tar_target(
+    db_path,
+    build_a_db(file_path),
+    format = "rds"
+  ),
+  tar_target(
     market_info,
     download_data(
       here("data", "market-orders-latest.v3.csv.bz2"),
@@ -46,7 +51,7 @@ list(
   ),
   tar_target(
     db_writes,
-    tar_map(writeto_db, target_list)
+    tar_map(writeto_db, target_list, db_path)
   ),
   format = "rds"
 )
