@@ -48,13 +48,11 @@ list(
         market_info = market_info,
         invtypes = invtypes
       )
-    }
+    },
   ),
   tar_target(
     db_writes,
-    map(
-      target_list, ~ (writeto_db(.x, db_path))
-    )
+    mapply(writeto_db, target_list, db_path)
   ),
   format = "rds"
 )
