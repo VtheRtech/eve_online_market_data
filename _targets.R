@@ -27,27 +27,28 @@ list(
   ),
   tar_target(
     market_info,
-    download_data(
-      here("data", "market-orders-latest.v3.csv.bz2"),
-      "https://data.everef.net/market-orders/market-orders-latest.v3.csv.bz2"
-    ),
+    download_data(here("data", "market-orders-latest.v3.csv.bz2"),
+                  "https://data.everef.net/market-orders/market-orders-latest.v3.csv.bz2"),
     format = "rds"
   ),
   tar_target(
     invtypes,
-    download_data(
-      here("data", "invTypes.csv.bz2"),
-      "https://www.fuzzwork.co.uk/dump/latest/invTypes.csv.bz2"
-    ),
+    download_data(here("data", "invTypes.csv.bz2"),
+                  "https://www.fuzzwork.co.uk/dump/latest/invTypes.csv.bz2" ),
+    format = "rds"
+  ),
+  tar_target(
+    staStation,
+    download_data(here("data", "staStation.csv.bz2"),
+                  "https://www.fuzzwork.co.uk/dump/latest/staStations.csv.bz2" ),
     format = "rds"
   ),
   tar_target(
     target_list,
     {
-      list(
-        market_info = market_info,
-        invtypes = invtypes
-      )
+      list(market_info = market_info,
+           invtypes = invtypes,
+           staStation = staStation)
     }
   ),
   tar_target(
