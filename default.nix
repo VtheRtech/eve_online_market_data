@@ -27,7 +27,9 @@ let
       lintr
       RSQLite
       DBI
+      httpuv # needed for connecting to google sheets 
       googlesheets4
+      googledrive # google sheet authenticator
       here
       targets
       tarchetypes
