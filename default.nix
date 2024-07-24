@@ -24,7 +24,10 @@ let
       tidyverse
       visNetwork
       languageserver
+      lintr
       RSQLite
+      DBI
+      googlesheets4
       here
       targets
       tarchetypes

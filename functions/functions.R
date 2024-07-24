@@ -49,3 +49,23 @@ writeto_db <- function(tibble, path) {
   DBI::dbDisconnect(con)
   return(db_name)
 }
+
+link_excel_to_db <- function(){
+  # Authenticate with Google Sheets
+gs4_auth(path = "path/to/your/credentials.json")
+
+  # Connect to the SQLite database
+con <- dbConnect(RSQLite::SQLite(), "path/to/your/database.sqlite")
+
+  # Read the data from a table in the SQLite database
+db_data <- dbReadTable(con, "your_table_name")
+
+  # Close the connection
+dbDisconnect(con)
+
+  # Specify the Google Sheets URL or Sheet ID
+sheet_url <- "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit"
+
+  # Write the data frame to the Google Sheet
+sheet_write(db_data, sheet = sheet_url, sheet_name = "Sheet1")
+}

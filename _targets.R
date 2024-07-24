@@ -44,18 +44,18 @@ list(
     format = "rds"
   ),
   tar_target(
-    target_list,
-    {
-      list(market_info = market_info,
-           invtypes = invtypes,
-           staStation = staStation)
-    }
+    inv_types_db,
+    writeto_db(invtypes, db_path),
+    format = "rds"
   ),
   tar_target(
-    db_writes,
-    map(
-      target_list, ~ (writeto_db(.x, db_path))
-    )
+    station_db,
+    writeto_db(staStation, db_path),
+    format = "rds"
   ),
-  format = "rds"
+  tar_target(
+    market_information_db,
+    writeto_db(market_info, db_path),
+    format = "rds"
+  )
 )
