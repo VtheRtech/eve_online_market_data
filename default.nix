@@ -25,6 +25,7 @@ let
       visNetwork
       languageserver
       lintr
+      purrr
       RSQLite
       DBI
       httpuv # needed for connecting to google sheets 
