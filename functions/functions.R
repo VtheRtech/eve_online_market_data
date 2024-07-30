@@ -50,23 +50,22 @@ writeto_db <- function(tibble, path) {
   return(db_name)
 }
 
-link_excel_to_db <- function() {
+link_excel_to_db <- function(sheet) {
   # Authenticate Google Drive
-  googledrive::drive_auth()
-
-  googledrive::gs4_find()
+  googledrive::drive_auth(email = "sakeyisu@gmail.com")
+ googlesheets4::gs4_auth(105477609006513485812)
   # Connect to the SQLite database
-  con <- DBI::dbConnect(RSQLite::SQLite(), "path/to/your/database.sqlite")
-
+  con <- DBI::dbConnect(RSQLite::SQLite(), here::here( "data", "eve_online_market.sqlite3"))
   # Read the data from a table in the SQLite database
-  db_data <- DBI::dbReadTable(con, "your_table_name")
-
+  db_data <- DBI::dbReadTable(con, "Aset Market")
   # Close the connection
   DBI::dbDisconnect(con)
-
   # Specify the Google Sheets URL or Sheet ID
-  sheet_url <- "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit"
+  sheet_url <- "https://docs.google.com/spreadsheets/d/1wm0pBitr5JenR8pUNc-NcuJsuHcMJk55p_ZkB4IUuqI/edit?pli=1&gid=0#gid=0"
 
+  sheet <-  gs4_get(sheet_url) 
   # Write the data frame to the Google Sheet
-  googlesheets4:: sheet_write(db_data, sheet = sheet_url, sheet_name = "Sheet1") 
+  googlesheets4:: sheet_write(db_data, sheet = sheet_url, sheet_name = "sheet1")
 }
+
+link_excel_to_db( "Aset market")

@@ -25,6 +25,8 @@ let
       visNetwork
       languageserver
       lintr
+      reactable
+      httpgd
       purrr
       RSQLite
       DBI
