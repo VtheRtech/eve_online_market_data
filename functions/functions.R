@@ -64,11 +64,12 @@ link_excel_to_db <- function() {
   DBI::dbDisconnect(con)
   # Specify the Google Sheets URL or Sheet ID
   # Write the data frame to the Google Sheet
-#  ss <- gs4_create("market_watcher", sheets = db_aset)
-ss <-  googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/107qO9HOfhtj7n7oz19FW0Qk1zAsqfWeF9M8GKsoEQ_w/edit?usp=drive_link")
-
-  ss <- range_read(gs4_example("market_watcher"), sheet = 2)
-
-  head(db_aset) |>
-    sheet_write(ss, sheet = "aset market")
+  #  ss <- gs4_create("market_watcher", sheets = db_aset)
+  url <- "https://docs.google.com/spreadsheets/d/107qO9HOfhtj7n7oz19FW0Qk1zAsqfWeF9M8GKsoEQ_w/edit?usp=drive_link"
+  drv  <-  googlesheets4::gs4_get(url)
+  drv <-  googlesheets4::read_sheet(ss)
+  gs <- range_read(gs4_example("market_watcher"), sheet = 2)
+  str(ss)
+  sheet_write(db_aset, ss = drv, sheet = "aset market")
+  sheet_write(db_jita, ss = drv, sheet = "jita market")
 }
