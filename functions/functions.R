@@ -50,22 +50,25 @@ writeto_db <- function(tibble, path) {
   return(db_name)
 }
 
-link_excel_to_db <- function(sheet) {
+link_excel_to_db <- function() {
+  require(googledrive) 
+  require(googlesheets4)
   # Authenticate Google Drive
-  googledrive::drive_auth(email = "sakeyisu@gmail.com")
- googlesheets4::gs4_auth(105477609006513485812)
   # Connect to the SQLite database
-  con <- DBI::dbConnect(RSQLite::SQLite(), here::here( "data", "eve_online_market.sqlite3"))
+  con <- DBI::dbConnect(RSQLite::SQLite(),
+                        here::here("data", "eve_online_market.sqlite3"))
   # Read the data from a table in the SQLite database
-  db_data <- DBI::dbReadTable(con, "Aset Market")
+  db_jita <- DBI::dbReadTable(con, "Jita market")
+  db_aset <- DBI::dbReadTable(con, "Aset market")
   # Close the connection
   DBI::dbDisconnect(con)
   # Specify the Google Sheets URL or Sheet ID
-  sheet_url <- "https://docs.google.com/spreadsheets/d/1wm0pBitr5JenR8pUNc-NcuJsuHcMJk55p_ZkB4IUuqI/edit?pli=1&gid=0#gid=0"
-
-  sheet <-  gs4_get(sheet_url) 
   # Write the data frame to the Google Sheet
-  googlesheets4:: sheet_write(db_data, sheet = sheet_url, sheet_name = "sheet1")
-}
+#  ss <- gs4_create("market_watcher", sheets = db_aset)
+ss <-  googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/107qO9HOfhtj7n7oz19FW0Qk1zAsqfWeF9M8GKsoEQ_w/edit?usp=drive_link")
 
-link_excel_to_db( "Aset market")
+  ss <- range_read(gs4_example("market_watcher"), sheet = 2)
+
+  head(db_aset) |>
+    sheet_write(ss, sheet = "aset market")
+}
