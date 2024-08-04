@@ -22,6 +22,8 @@ tar_option_set(
   format = "rds"
 )
 
+url1 <- "https://docs.google.com/spreadsheets/d/107qO9HOfhtj7n7oz19FW0Qk1zAsqfWeF9M8GKsoEQ_w/edit?usp=drive_link"
+
 list(
   tar_target(
     db_path,
@@ -32,6 +34,12 @@ list(
     market_info,
     download_data(here("data", "market-orders-latest.v3.csv.bz2"),
                   "https://data.everef.net/market-orders/market-orders-latest.v3.csv.bz2"),
+    format = "rds"
+  ),
+  tar_target(
+    invgroup,
+    download_data(here("data", "invGroups.csv.bz2"),
+                  "https://www.fuzzwork.co.uk/dump/latest/invGroups.csv.bz2"),
     format = "rds"
   ),
   tar_target(
@@ -47,6 +55,22 @@ list(
     format = "rds"
   ),
   tar_target(
+    invmeta_groups,
+    download_data(here("data", "invMetaGroups.csv.bz2"),
+                  "https://www.fuzzwork.co.uk/dump/latest/invMetaGroups.csv.bz2" ),
+    format = "rds"
+  ),
+  tar_target(
+    invMetaGroups_db,
+    writeto_db(invmeta_groups, db_path),
+    format = "rds"
+  ),
+  tar_target(
+    invgroup_db,
+    writeto_db(invgroup, db_path),
+    format = "rds"
+  ),
+  tar_target(
     inv_types_db,
     writeto_db(invtypes, db_path),
     format = "rds"
@@ -59,6 +83,11 @@ list(
   tar_target(
     market_information_db,
     writeto_db(market_info, db_path),
+    format = "rds"
+  ),
+  tar_target(
+   write_db_to_excel,
+    link_excel_to_db(url1),
     format = "rds"
   )
 )
